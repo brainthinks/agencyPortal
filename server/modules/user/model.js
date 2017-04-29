@@ -2,7 +2,7 @@
 
 const schema = require('./schema');
 
-class AgencyModel {
+class UserModel {
   constructor () {
     this.collectionName = 'users';
     this.name           = 'user';
@@ -13,8 +13,8 @@ class AgencyModel {
   }
 };
 
-AgencyModel.factory = () => {
-  return new AgencyModel();
+UserModel.factory = () => {
+  return new UserModel();
 }
 
-module.exports = AgencyModel;
+module.exports = UserModel;

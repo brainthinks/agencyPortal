@@ -2,15 +2,19 @@
 
 const schema = require('./schema');
 
-module.exports = class AgencyModel {
-  static collectionName = 'agencies';
-  static name           = 'agency';
-  static namePlural     = 'agencies';
-  static title          = 'Agency';
-  static titlePlural    = 'Agencies';
-  static schema         = schema;
-
+class SubmittedEntryModel {
   constructor () {
-    Object.assign(this, AgencyModel);
+    this.collectionName = 'submittedEntries';
+    this.name           = 'submittedEntry';
+    this.namePlural     = 'submittedEntries';
+    this.title          = 'Submitted Entry';
+    this.titlePlural    = 'Submitted Entries';
+    this.schema         = schema;
   }
 };
+
+SubmittedEntryModel.factory = () => {
+  return new SubmittedEntryModel();
+}
+
+module.exports = SubmittedEntryModel;

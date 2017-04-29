@@ -2,15 +2,19 @@
 
 const schema = require('./schema');
 
-module.exports = class ApprovalPathModel {
-  static collectionName = 'approvalPaths';
-  static name           = 'approvalPath';
-  static namePlural     = 'approvalPaths';
-  static title          = 'Approval Path';
-  static titlePlural    = 'Approval Paths';
-  static schema         = schema;
-
+class ApprovalPathModel {
   constructor () {
-    Object.assign(this, ApprovalPathModel);
+    this.collectionName = 'approvalPaths';
+    this.name           = 'approvalPath';
+    this.namePlural     = 'approvalPaths';
+    this.title          = 'Approval Path';
+    this.titlePlural    = 'Approval Paths';
+    this.schema         = schema;
   }
 };
+
+ApprovalPathModel.factory = () => {
+  return new ApprovalPathModel();
+}
+
+module.exports = ApprovalPathModel;
