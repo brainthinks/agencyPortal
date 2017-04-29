@@ -23,7 +23,7 @@ class Route {
   }
 
   generatePath () {
-    let path = '/';
+    let path = '/api/';
 
     path += this.path;
 

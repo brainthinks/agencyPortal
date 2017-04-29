@@ -24,9 +24,9 @@ module.exports = {
     main: ['./client/js/index.jsx'],
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build/js/'),
     publicPath: '/js/',
-    filename: 'index.js',
+    filename: 'js/index.js',
   },
   module: {
     rules: [
