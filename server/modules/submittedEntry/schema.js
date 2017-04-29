@@ -1,34 +1,35 @@
 'use strict';
 
 module.exports = {
-  name: {
-    name: 'name',
-    title: 'Name',
-    description: 'The machine-readable name of the agency.',
-    type: 'string',
-    unique: true,
+  userId: {
+    name: 'userId',
+    title: 'User ID',
+    description: 'The ID of the user who sumitted this entry.',
+    type: 'id',
+    reference: 'user',
     required: true,
   },
-  title: {
-    name: 'title',
-    title: 'Title',
-    description: 'The human-readable title of the agency.',
-    type: 'string',
-    unique: true,
+  submittedFormId: {
+    name: 'submittedFormId',
+    title: 'Submitted Form ID',
+    description: 'The ID of the form that the user submitted.',
+    type: 'id',
+    reference: 'submittedForm',
     required: true,
   },
-  abbreviation: {
-    name: 'abbreviation',
-    title: 'Abbreviation',
-    description: 'The abbreviation of the agency.',
-    type: 'string',
-    unique: true,
+  entryId: {
+    name: 'entryId',
+    title: 'Entry ID',
+    description: 'The ID of the entry that was submitted.',
+    type: 'id',
+    reference: 'entry',
     required: true,
   },
-  logoPath: {
-    name: 'logoPath',
-    title: 'Logo',
-    description: 'The agency\'s logo.',
-    type: 'string',
+  choices: {
+    name: 'choices',
+    title: 'Choices',
+    description: 'The choices made by the user for this entry.',
+    type: 'collection',
+    default: [],
   },
 };

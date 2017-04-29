@@ -1,34 +1,34 @@
 'use strict';
 
 module.exports = {
-  name: {
-    name: 'name',
-    title: 'Name',
-    description: 'The machine-readable name of the agency.',
-    type: 'string',
-    unique: true,
+  userId: {
+    name: 'userId',
+    title: 'User ID',
+    description: 'The ID of the user who submitted this form.',
+    type: 'id',
+    reference: 'user',
     required: true,
   },
-  title: {
-    name: 'title',
-    title: 'Title',
-    description: 'The human-readable title of the agency.',
-    type: 'string',
-    unique: true,
+  formId: {
+    name: 'formId',
+    title: 'Form ID',
+    description: 'The ID of the form the user submitted.',
+    type: 'id',
+    reference: 'form',
     required: true,
   },
-  abbreviation: {
-    name: 'abbreviation',
-    title: 'Abbreviation',
-    description: 'The abbreviation of the agency.',
-    type: 'string',
-    unique: true,
+  timestamp: {
+    name: 'timestamp',
+    title: 'Time of Submission',
+    description: 'The time the user submitted the form.',
+    type: 'timestamp',
     required: true,
   },
-  logoPath: {
-    name: 'logoPath',
-    title: 'Logo',
-    description: 'The agency\'s logo.',
-    type: 'string',
+  approvedPaths: {
+    name: 'approvedPaths',
+    title: 'Approvals',
+    description: 'The approvals steps that have been approved.',
+    type: 'collection',
+    default: [],
   },
 };

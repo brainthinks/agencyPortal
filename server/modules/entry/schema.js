@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: {
+  type: {
     name: 'name',
     title: 'Name',
     description: 'The machine-readable name of the agency.',
@@ -9,7 +9,7 @@ module.exports = {
     unique: true,
     required: true,
   },
-  title: {
+  text: {
     name: 'title',
     title: 'Title',
     description: 'The human-readable title of the agency.',
@@ -17,7 +17,7 @@ module.exports = {
     unique: true,
     required: true,
   },
-  abbreviation: {
+  description: {
     name: 'abbreviation',
     title: 'Abbreviation',
     description: 'The abbreviation of the agency.',
@@ -25,10 +25,11 @@ module.exports = {
     unique: true,
     required: true,
   },
-  logoPath: {
-    name: 'logoPath',
-    title: 'Logo',
-    description: 'The agency\'s logo.',
-    type: 'string',
+  choices: {
+    name: 'choices',
+    title: 'Choices',
+    description: 'The available choices for this entry.',
+    type: 'collection',
+    default: [],
   },
 };

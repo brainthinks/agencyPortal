@@ -1,0 +1,25 @@
+{
+  "name": "agency_portal",
+  "version": "0.0.1",
+  "description": "Agency Portal for forms",
+  "main": "server/index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mymainmanbrown/agencyPortal.git"
+  },
+  "author": "Brian Andress",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/mymainmanbrown/agencyPortal/issues"
+  },
+  "homepage": "https://github.com/mymainmanbrown/agencyPortal#readme",
+  "dependencies": {
+    "bson": "^1.0.4",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26"
+  }
+}

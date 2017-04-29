@@ -1,34 +1,32 @@
 'use strict';
 
 module.exports = {
-  name: {
-    name: 'name',
-    title: 'Name',
-    description: 'The machine-readable name of the Approval Path.',
-    type: 'string',
-    unique: true,
-    required: true,
+  supervisor: {
+    name: 'supervisor',
+    title: 'Supervisor Approval Required',
+    description: 'Is the approval of the user\'s supervisor necessary?',
+    type: 'boolean',
+    default: true,
   },
-  title: {
-    name: 'title',
-    title: 'Title',
-    description: 'The human-readable title of the Approval Path.',
-    type: 'string',
-    unique: true,
-    required: true,
+  purchaser: {
+    name: 'purchaser',
+    title: 'Divsion Purchaser Approval Required',
+    description: 'Is the approval of the user\'s division\'s purchaser necessary?',
+    type: 'boolean',
+    default: true,
   },
-  abbreviation: {
-    name: 'abbreviation',
-    title: 'Abbreviation',
-    description: 'The abbreviation of the Approval Path.',
-    type: 'string',
-    unique: true,
-    required: true,
+  chief: {
+    name: 'chief',
+    title: 'Supervisor Approval Required',
+    description: 'Is the approval of the user\'s division\'s chief necessary?',
+    type: 'boolean',
+    default: true,
   },
-  parent: {
-    name: 'parent',
-    title: 'Parent Approval Path',
-    description: 'The Approval Path that contains this Approval Path.',
-    type: 'string',
+  director: {
+    name: 'director',
+    title: 'Director Approval Required',
+    description: 'Is the approval of the user\'s agency\'s director necessary?',
+    type: 'boolean',
+    default: true,
   },
 };

@@ -28,9 +28,8 @@ module.exports = {
   parent: {
     name: 'parent',
     title: 'Parent Divison',
+    description: 'The Divison that contains this Divison.',
     type: 'id',
     reference: 'divison',
-    description: 'The Divison that contains this Divison.',
-    type: 'string',
   },
 };
