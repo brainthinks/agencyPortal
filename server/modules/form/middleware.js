@@ -1,6 +1,7 @@
 'use strict';
 
 const ObjectID = require('bson').ObjectID;
+const keyBy = require('lodash/keyBy');
 
 const Model = require('./model').factory();
 
@@ -10,8 +11,14 @@ function collection (req) {
 
 class FormServices {
   get (req, res, next) {
+    const { indexById } = req.query;
+
     return collection(req).find().toArray()
       .then((records) => {
+        if (indexById) {
+          records = keyBy(records, '_id');
+        }
+
         res.status(200).send(records);
       })
       .catch(next);

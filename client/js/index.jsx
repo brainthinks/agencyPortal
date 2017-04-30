@@ -15,28 +15,36 @@ import {
 
 import Form from './components/Form.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import Admin from './components/Admin.jsx';
 
 const BasicExample = () => (
   <Router>
     <div>
-      <Nav bsStyle="pills">
-        <Link to="/" style={{ marginLeft: '50px' }}>Home</Link>
-        <Link to="/myForms" style={{ marginLeft: '50px' }}>Dashboard</Link>
-        <Link to="/newForm" style={{ marginLeft: '50px' }}>New Form</Link>
+      <Nav bsStyle='pills'>
+        <img
+          src='/logo.png'
+          style={{
+            width: '120px',
+            padding: '5px 10px',
+          }}
+        />
+        <Link to='/' style={{ marginLeft: '50px' }}>Dashboard</Link>
+        <Link to='/forms' style={{ marginLeft: '50px' }}>Forms</Link>
+        <Link to='/admin' style={{ marginLeft: '50px' }}>Admin</Link>
       </Nav>
 
       <hr/>
 
       <Grid>
-        <Row className="show-grid">
-          <Col md={2}>
+        <Row className='show-grid'>
+          <Col md={1}>
           </Col>
-          <Col md={8}>
-            <Route exact path="/" component={Form} />
-            <Route path="/myForms" component={Dashboard} />
-            <Route path="/newForm" component={Form} />
+          <Col md={10}>
+            <Route exact path='/' component={Dashboard} />
+            <Route path='/forms' component={Form} />
+            <Route path='/admin' component={Admin} />
           </Col>
-          <Col md={2}>
+          <Col md={1}>
           </Col>
         </Row>
       </Grid>

@@ -1,18 +1,35 @@
 import React from 'react';
 import axios from 'axios';
 import find from 'lodash/find';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import { Button } from 'react-bootstrap';
+import Griddle, {
+  plugins,
+  RowDefinition,
+  ColumnDefinition,
+} from 'griddle-react';
 
 import FieldGroup from './FieldGroup.jsx';
+
+const NewLayout = ({ Table, Filter }) => (
+  <div>
+    <div style={{ paddingBottom: '10px' }}>
+      <Filter />
+    </div>
+    <div>
+      <Table />
+    </div>
+  </div>
+);
 
 export default class Form extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      form: null,
+      forms: {},
       entries: [],
+      selectedForm: null,
       submitted: false,
     };
 
@@ -24,12 +41,12 @@ export default class Form extends React.Component {
 
   initialize () {
     Promise.all([
-      axios.get('/api/form/5904b62d657c15c7225edf03'),
+      axios.get('/api/form?indexById=true'),
       axios.get('/api/entry'),
     ])
       .then(([ formResponse, entryResponse ]) => {
         this.setState({
-          form: formResponse.data,
+          forms: formResponse.data,
           entries: entryResponse.data,
         });
       })
@@ -44,27 +61,26 @@ export default class Form extends React.Component {
 
   onSubmit () {
     const {
-      form,
+      forms,
+      selectedForm,
       entries,
       submitted,
-      ...submittedEntries,
+      ...submittedEntries
     } = this.state;
 
     const record = {
       userId: window.userId,
-      formId: form._id,
+      formId: forms[selectedForm]._id,
       submittedEntries,
-    }
+    };
 
-    console.log(record)
-
-    // axios.post('/api/submittedForm', record)
-    //   .then(() => {
-    //     this.setState({ submitted: true });
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    axios.post('/api/submittedForm', record)
+      .then(() => {
+        this.setState({ submitted: true });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   prepareEntry (id) {
@@ -142,11 +158,12 @@ export default class Form extends React.Component {
 
   render () {
     const {
-      form,
+      forms,
+      selectedForm,
       submitted,
     } = this.state;
 
-    if (!form) {
+    if (!Object.keys(forms).length) {
       return (
         <div>
           <p>Loading....</p>
@@ -156,21 +173,56 @@ export default class Form extends React.Component {
 
     if (submitted) {
       return (
-        <Redirect push to='/myForms'/>
+        <Redirect push to='/'/>
       );
     }
 
+    if (selectedForm) {
+      const form = forms[selectedForm];
+
+      return (
+        <div>
+          <h1>{form.title}</h1>
+          <p>{form.description}</p>
+          <form>
+            {form.entries.map((entryId) => this.prepareEntry(entryId))}
+          </form>
+          <Button
+            bsStyle='primary'
+            onClick={this.onSubmit}
+          >Submit</Button>
+        </div>
+      );
+    }
+
+    const data = Object.keys(forms).map((formId) => {
+      return { form: forms[formId] };
+    });
+
     return (
       <div>
-        <h1>{form.title}</h1>
-        <p>{form.description}</p>
-        <form>
-          {form.entries.map((entryId) => this.prepareEntry(entryId))}
-        </form>
-        <Button
-          bsStyle='primary'
-          onClick={this.onSubmit}
-        >Submit</Button>
+        <Griddle
+          data={data}
+          plugins={[plugins.LocalPlugin]}
+          components={{
+            Layout: NewLayout,
+          }}
+        >
+          <RowDefinition>
+            <ColumnDefinition
+              key='form'
+              id='form'
+              title='Form'
+              customComponent={({ value }) => {
+                return (
+                  <a
+                    onClick={() => { this.setState({ selectedForm: value.get('_id') }); }}
+                  >{value.get('title')}</a>
+                );
+              }}
+            />
+          </RowDefinition>
+        </Griddle>
       </div>
     );
   }
