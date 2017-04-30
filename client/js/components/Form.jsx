@@ -156,6 +156,39 @@ export default class Form extends React.Component {
     }
   }
 
+  prepareTable () {
+    const { forms } = this.state;
+
+    const data = Object.keys(forms).map((formId) => {
+      return { form: forms[formId] };
+    });
+
+    return (
+      <Griddle
+        data={data}
+        plugins={[plugins.LocalPlugin]}
+        components={{
+          Layout: NewLayout,
+        }}
+      >
+        <RowDefinition>
+          <ColumnDefinition
+            key='form'
+            id='form'
+            title='Form'
+            customComponent={({ value }) => {
+              return (
+                <a
+                  onClick={() => { this.setState({ selectedForm: value.get('_id') }); }}
+                >{value.get('title')}</a>
+              );
+            }}
+          />
+        </RowDefinition>
+      </Griddle>
+    );
+  }
+
   render () {
     const {
       forms,
@@ -195,34 +228,16 @@ export default class Form extends React.Component {
       );
     }
 
-    const data = Object.keys(forms).map((formId) => {
-      return { form: forms[formId] };
-    });
-
     return (
       <div>
-        <Griddle
-          data={data}
-          plugins={[plugins.LocalPlugin]}
-          components={{
-            Layout: NewLayout,
-          }}
-        >
-          <RowDefinition>
-            <ColumnDefinition
-              key='form'
-              id='form'
-              title='Form'
-              customComponent={({ value }) => {
-                return (
-                  <a
-                    onClick={() => { this.setState({ selectedForm: value.get('_id') }); }}
-                  >{value.get('title')}</a>
-                );
-              }}
-            />
-          </RowDefinition>
-        </Griddle>
+        { this.prepareTable() }
+        <hr />
+        <div>
+          <p>This is where you will be able to:</p>
+          <ul>
+            <li>Choose a form to submit</li>
+          </ul>
+        </div>
       </div>
     );
   }

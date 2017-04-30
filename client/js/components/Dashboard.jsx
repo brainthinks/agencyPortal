@@ -127,11 +127,22 @@ export default class Dashboard extends React.Component {
         { this.prepareTable() }
         <hr />
         <div>
-          <p>This is where you will be able to see the following:</p>
+          <p>As an employee, you will be able to:</p>
           <ul>
-            <li>If you are a supervisor or purchaser, the forms that are pending your approval</li>
-            <li>If you are a supervisor or purchaser, the forms that you have approved</li>
-            <li>If you are a supervisor or purchaser, the forms that you have rejected</li>
+            <li>See your submission history</li>
+            <li>Filter by approved</li>
+            <li>Filter by rejected</li>
+            <li>Filter by pending approval</li>
+          </ul>
+        </div>
+        <hr />
+        <div>
+          <p>As a supervisor or purchaser, you will be able to see:</p>
+          <ul>
+            <li>the submission history for each of your direct reports</li>
+            <li>your pending approvals</li>
+            <li>approvals</li>
+            <li>rejections</li>
           </ul>
         </div>
       </div>
