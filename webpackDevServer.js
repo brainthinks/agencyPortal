@@ -24,7 +24,8 @@ var server = new WebpackDevServer(compiler, {
   // Set this if you want to enable gzip compression for assets
 
   proxy: {
-    "/api/*": "http://localhost:3000"
+    "/api/*": "http://localhost:3000",
+    // "/": "http://localhost:8080/index.html",
   },
   // Set this if you want webpack-dev-server to delegate a single path to an arbitrary server.
   // Use "**" to proxy all paths to the specified server.
