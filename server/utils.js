@@ -3,5 +3,11 @@
 const ObjectID = require('bson').ObjectID;
 
 module.exports = {
-  toMongoId: (id) => ObjectID.createFromHexString(id),
+  toMongoId: (id) => {
+    if (typeof id !== 'string' || id === 'undefined') {
+      return id;
+    }
+
+    return ObjectID.createFromHexString(id);
+  },
 };

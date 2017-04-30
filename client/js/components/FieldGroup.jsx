@@ -83,6 +83,32 @@ export default class FieldGroup extends React.Component {
         break;
       }
 
+      case 'select': {
+        formControl = (
+          <FormControl
+            name={id}
+            componentClass='select'
+            onChange={this.onChange}
+            {...props}
+          >
+            <option
+              key=''
+              value=''
+            >{props.placeholder}</option>
+            {options.map((option, i) => {
+              return (
+                <option
+                  key={i}
+                  value={option.value}
+                >{option.text}</option>
+              );
+            })}
+          </FormControl>
+        );
+
+        break;
+      }
+
       default: {
         formControl = (
           <FormControl

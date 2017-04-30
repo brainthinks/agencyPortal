@@ -16,6 +16,8 @@ import {
 import Form from './components/Form.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import Admin from './components/Admin.jsx';
+import Login from './components/Login.jsx';
+import Logout from './components/Logout.jsx';
 
 const BasicExample = () => (
   <Router>
@@ -28,9 +30,11 @@ const BasicExample = () => (
             padding: '5px 10px',
           }}
         />
-        <Link to='/' style={{ marginLeft: '50px' }}>Dashboard</Link>
+        <Link to='/' style={{ marginLeft: '50px' }}>Login</Link>
+        <Link to='/dashboard' style={{ marginLeft: '50px' }}>Dashboard</Link>
         <Link to='/forms' style={{ marginLeft: '50px' }}>Forms</Link>
         <Link to='/admin' style={{ marginLeft: '50px' }}>Admin</Link>
+        <Link to='/logout' style={{ marginLeft: '50px' }}>Logout</Link>
       </Nav>
 
       <hr/>
@@ -40,9 +44,11 @@ const BasicExample = () => (
           <Col md={1}>
           </Col>
           <Col md={10}>
-            <Route exact path='/' component={Dashboard} />
+            <Route exact path='/' component={Login} />
+            <Route path='/dashboard' component={Dashboard} />
             <Route path='/forms' component={Form} />
             <Route path='/admin' component={Admin} />
+            <Route path='/logout' component={Logout} />
           </Col>
           <Col md={1}>
           </Col>
@@ -61,7 +67,5 @@ const Home = () => (
     <h2>Home</h2>
   </div>
 );
-
-window.userId = '5904b38d960b537a3de2c8ca';
 
 ReactDOM.render(BasicExample(), document.getElementById('app'));

@@ -206,7 +206,7 @@ export default class Form extends React.Component {
 
     if (submitted) {
       return (
-        <Redirect push to='/'/>
+        <Redirect push to='/dashboard'/>
       );
     }
 

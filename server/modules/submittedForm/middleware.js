@@ -12,7 +12,19 @@ function collection (req) {
 
 class SubmittedFormServices {
   get (req, res, next) {
-    return collection(req).find().toArray()
+    let userId = utils.toMongoId(req.query.userId);
+
+    if (userId === 'undefined') {
+      userId = undefined;
+    }
+
+    const query = {};
+
+    if (userId) {
+      query.userId = userId;
+    }
+
+    return collection(req).find(query).toArray()
       .then((records) => {
         res.status(200).send(records);
       })

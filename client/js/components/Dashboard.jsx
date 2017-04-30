@@ -35,7 +35,7 @@ export default class Dashboard extends React.Component {
 
   initialize () {
     Promise.all([
-      axios.get('/api/submittedForm'),
+      axios.get(`/api/submittedForm?userId=${window.userId}`),
       axios.get('/api/form?indexById=true'),
     ])
       .then(([ submittedForms, forms ]) => {
