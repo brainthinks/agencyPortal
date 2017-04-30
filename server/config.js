@@ -5,4 +5,5 @@ module.exports = {
     host: 'localhost',
     name: 'agencyPortal',
   },
-}
+  bodySizeLimit: '10mb',
+};

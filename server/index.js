@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+const express = require('express');
 
 const config = require('./config');
 
@@ -21,12 +21,14 @@ MongoClient.connect(mongoUrl)
   .then((db) => {
     console.info('Connected to database.');
 
-    const middleware = require('./middleware')(db);
-    const routes = require('./routes')(app, db);
+    const middleware = require('./middleware')(config, db);
+    const routes = require('./routes')(app, config, db);
     const errorMiddleware = middleware.pop();
 
     registerMiddleware(middleware, app);
+
     routes.registerAll();
+
     app.use(errorMiddleware);
 
     app.listen(3000, function () {
@@ -34,7 +36,7 @@ MongoClient.connect(mongoUrl)
     });
   })
   .catch((err) => {
-    console.log('Error while connecting to the database!')
+    console.log('Error while connecting to the database!');
     console.log(err);
     // @todo - log the error to a file
   });

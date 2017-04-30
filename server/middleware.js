@@ -1,5 +1,7 @@
 'use strict';
 
+const bodyParser = require('body-parser');
+
 function attachDb (db) {
   return (req, res, next) => {
     req.db = db;
@@ -16,7 +18,14 @@ function handleError () {
   };
 }
 
-module.exports = (db) => [
+module.exports = (config, db) => [
   attachDb(db),
+  bodyParser.urlencoded({
+    extended: true,
+    limit: config.bodySizeLimit,
+  }),
+  bodyParser.json({
+    limit: config.bodySizeLimit,
+  }),
   handleError(),
 ];

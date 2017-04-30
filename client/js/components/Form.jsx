@@ -1,26 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import find from 'lodash/find';
+import { Redirect } from 'react-router'
+import { Button } from 'react-bootstrap';
 
-import {
-  Button,
-  FormGroup,
-  ControlLabel,
-  FormControl,
-  HelpBlock,
-  Radio,
-} from 'react-bootstrap';
-
-function FieldGroup ({ id, label, description, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      { description && <p>{description}</p> }
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
+import FieldGroup from './FieldGroup.jsx';
 
 export default class Form extends React.Component {
   constructor (props) {
@@ -29,7 +13,11 @@ export default class Form extends React.Component {
     this.state = {
       form: null,
       entries: [],
+      submitted: false,
     };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.initialize();
   }
@@ -50,107 +38,125 @@ export default class Form extends React.Component {
       });
   }
 
-  getValidationState () {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+  onChange (name, value) {
+    this.setState({ [name]: value });
+  }
+
+  onSubmit () {
+    const {
+      form,
+      entries,
+      submitted,
+      ...submittedEntries,
+    } = this.state;
+
+    const record = {
+      userId: window.userId,
+      formId: form._id,
+      submittedEntries,
+    }
+
+    console.log(record)
+
+    // axios.post('/api/submittedForm', record)
+    //   .then(() => {
+    //     this.setState({ submitted: true });
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   }
 
   prepareEntry (id) {
     const entry = find(this.state.entries, { _id: id });
-    let formControl;
 
     switch (entry.type) {
       case 'singleChoice': {
-        formControl = (
-          <FormGroup
-            key={id}
-          >
-            <ControlLabel>{entry.text}</ControlLabel>
-            <p>{entry.description}</p>
-            {entry.choices.map((choice, i) => {
-              return (
-                <Radio
-                  key={`${id}_${i}`}
-                  name={id}
-                  inline>{choice}
-                </Radio>
-              );
-            })}
-          </FormGroup>
-        );
-
-        break;
-      }
-      case 'shortText': {
-        formControl = (
+        return (
           <FieldGroup
             key={id}
-            type="text"
+            id={id}
+            type="radio"
             label={entry.text}
             description={entry.description}
+            options={entry.choices}
+            onChange={this.onChange}
             placeholder="Enter text"
           />
         );
-
-        break;
       }
-      case 'longText': {
-        formControl = (
-          <FormGroup
-            key={id}
-          >
-            <ControlLabel>{entry.text}</ControlLabel>
-            <p>{entry.description}</p>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Tell us a little bit about it..."
-            />
-          </FormGroup>
-        );
-
-        break;
-      }
-      case 'dateRange': {
-        formControl = (
+      case 'shortText': {
+        return (
           <FieldGroup
             key={id}
+            id={id}
             type="text"
             label={entry.text}
             description={entry.description}
+            onChange={this.onChange}
+            placeholder="Enter text"
+          />
+        );
+      }
+      case 'longText': {
+        return (
+          <FieldGroup
+            key={id}
+            id={id}
+            type="textarea"
+            label={entry.text}
+            description={entry.description}
+            onChange={this.onChange}
+            placeholder="Enter text"
+          />
+        );
+      }
+      case 'dateRange': {
+        return (
+          <FieldGroup
+            key={id}
+            id={id}
+            type="text"
+            label={entry.text}
+            description={entry.description}
+            onChange={this.onChange}
             placeholder="Enter a date"
           />
         );
-
-        break;
       }
       case 'number': {
-        formControl = (
+        return (
           <FieldGroup
             key={id}
+            id={id}
             type="text"
             label={entry.text}
             description={entry.description}
+            onChange={this.onChange}
             placeholder="Enter a number"
           />
         );
-
-        break;
       }
     }
-
-    return formControl;
   }
 
   render () {
-    const { form } = this.state;
+    const {
+      form,
+      submitted,
+    } = this.state;
 
     if (!form) {
       return (
         <div>
           <p>Loading....</p>
         </div>
+      );
+    }
+
+    if (submitted) {
+      return (
+        <Redirect push to='/myForms'/>
       );
     }
 
@@ -161,7 +167,10 @@ export default class Form extends React.Component {
         <form>
           {form.entries.map((entryId) => this.prepareEntry(entryId))}
         </form>
-        <Button bsStyle='primary'>Submit</Button>
+        <Button
+          bsStyle='primary'
+          onClick={this.onSubmit}
+        >Submit</Button>
       </div>
     );
   }

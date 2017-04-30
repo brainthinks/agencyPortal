@@ -54,4 +54,6 @@ const Home = () => (
   </div>
 );
 
+window.userId = '5904b38d960b537a3de2c8ca';
+
 ReactDOM.render(BasicExample(), document.getElementById('app'));

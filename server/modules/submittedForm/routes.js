@@ -1,39 +1,34 @@
 'use strict';
 
+const middleware = require('./middleware').factory();
+
 module.exports = [
   {
     method: 'post',
     description: 'Create a submitted form',
     path: 'submittedForm',
-    parameters: [],
-    query: [],
+    handler: middleware.create,
   },
   {
     method: 'patch',
     description: 'Update a submitted form',
     path: 'submittedForm',
-    parameters: [],
-    query: [],
   },
   {
     method: 'put',
     description: 'Overwrite a submitted form',
     path: 'submittedForm',
-    parameters: [],
-    query: [],
   },
   {
     method: 'get',
     description: 'Get all submitted forms in the system',
     path: 'submittedForm',
-    parameters: [],
-    query: [],
+    handler: middleware.get,
   },
   {
     method: 'get',
     description: 'Get a submitted form by ID',
     path: 'submittedForm',
-    parameters: [ 'id' ],
-    query: [],
+    handler: middleware.getById,
   },
 ];

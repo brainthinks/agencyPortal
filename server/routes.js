@@ -13,7 +13,7 @@ const userRoutes = require('./modules/user/routes');
 
 const RouteCollection = require('./collections/Route');
 
-module.exports = (app, db) => {
+module.exports = (app, config, db) => {
   return RouteCollection.factory(app)
     .addManyFromData(agencyRoutes)
     .addManyFromData(approvalPathRoutes)
