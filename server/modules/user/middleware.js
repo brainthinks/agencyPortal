@@ -1,6 +1,9 @@
 'use strict';
 
 const ObjectID = require('bson').ObjectID;
+const keyBy = require('lodash/keyBy');
+
+const utils = require('../../utils');
 
 const Model = require('./model').factory();
 
@@ -10,8 +13,23 @@ function collection (req) {
 
 class UserServices {
   get (req, res, next) {
-    return collection(req).find().toArray()
+    const { indexById, supervisors } = req.query;
+    const query = {};
+
+    if (supervisors) {
+      if (Array.isArray(supervisors)) {
+        query.supervisors = { $in: utils.toMongoId(supervisors) };
+      } else {
+        query.supervisors = utils.toMongoId(supervisors);
+      }
+    }
+
+    return collection(req).find(query).toArray()
       .then((records) => {
+        if (indexById) {
+          records = keyBy(records, '_id');
+        }
+
         res.status(200).send(records);
       })
       .catch(next);

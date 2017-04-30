@@ -2,12 +2,18 @@
 
 const ObjectID = require('bson').ObjectID;
 
-module.exports = {
-  toMongoId: (id) => {
-    if (typeof id !== 'string' || id === 'undefined') {
-      return id;
-    }
+function toMongoId (id) {
+  if (Array.isArray(id)) {
+    return id.map(toMongoId);
+  }
 
-    return ObjectID.createFromHexString(id);
-  },
+  if (typeof id !== 'string' || id === 'undefined') {
+    return id;
+  }
+
+  return ObjectID.createFromHexString(id);
+}
+
+module.exports = {
+  toMongoId,
 };

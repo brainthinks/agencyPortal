@@ -1,5 +1,7 @@
 'use strict';
 
+const keyBy = require('lodash/keyBy');
+
 const utils = require('../../utils');
 
 const SubmittedEntryModel = require('../submittedEntry/model').factory();
@@ -13,6 +15,7 @@ function collection (req) {
 class SubmittedFormServices {
   get (req, res, next) {
     let userId = utils.toMongoId(req.query.userId);
+    const { indexById } = req.query;
 
     if (userId === 'undefined') {
       userId = undefined;
@@ -21,11 +24,19 @@ class SubmittedFormServices {
     const query = {};
 
     if (userId) {
-      query.userId = userId;
+      if (Array.isArray(userId)) {
+        query.userId = { $in: userId };
+      } else {
+        query.userId = userId;
+      }
     }
 
     return collection(req).find(query).toArray()
       .then((records) => {
+        if (indexById) {
+          records = keyBy(records, '_id');
+        }
+
         res.status(200).send(records);
       })
       .catch(next);

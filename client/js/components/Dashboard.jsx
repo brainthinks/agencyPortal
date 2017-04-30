@@ -24,7 +24,9 @@ export default class Dashboard extends React.Component {
 
     this.state = {
       submittedForms: [],
-      forms: [],
+      forms: {},
+      directReports: {},
+      directReportsSubmittedForms: {},
       showPending: true,
       showApproved: true,
       showRejected: true,
@@ -34,14 +36,32 @@ export default class Dashboard extends React.Component {
   }
 
   initialize () {
+    let submittedForms;
+    let forms;
+    let directReports;
+
     Promise.all([
       axios.get(`/api/submittedForm?userId=${window.userId}`),
       axios.get('/api/form?indexById=true'),
+      axios.get(`/api/user?indexById=true&supervisors=${window.userId}`),
     ])
-      .then(([ submittedForms, forms ]) => {
+      .then(([ _submittedForms, _forms, _directReports ]) => {
+        submittedForms = _submittedForms.data;
+        forms = _forms.data;
+        directReports = _directReports.data;
+
+        const userIdsQuery = Object.keys(directReports).map((directReportId) => {
+          return `userId[]=${directReportId}`;
+        }).join('&');
+
+        return axios.get(`/api/submittedForm?${userIdsQuery}&indexById=true`);
+      })
+      .then(({ data }) => {
         this.setState({
-          submittedForms: submittedForms.data,
-          forms: forms.data,
+          submittedForms: submittedForms,
+          forms: forms,
+          directReports: directReports,
+          directReportsSubmittedForms: data,
         });
       })
       .catch((error) => {
@@ -49,7 +69,7 @@ export default class Dashboard extends React.Component {
       });
   }
 
-  prepareTable () {
+  prepareMySubmissions () {
     const { submittedForms, forms } = this.state;
 
     if (!submittedForms.length) {
@@ -83,6 +103,7 @@ export default class Dashboard extends React.Component {
 
     return (
       <div>
+        <h1>My Submission History</h1>
         <Griddle
           data={data}
           plugins={[plugins.LocalPlugin]}
@@ -121,10 +142,76 @@ export default class Dashboard extends React.Component {
     );
   }
 
+  prepareMyTasks () {
+    const {
+      directReports,
+      directReportsSubmittedForms,
+      forms,
+    } = this.state;
+
+    if (!Object.keys(directReports).length) {
+      return (
+        <div>
+          <h1>My Pending Tasks</h1>
+          <p>No direct reports found!</p>
+        </div>
+      );
+    }
+
+    if (!Object.keys(directReportsSubmittedForms).length) {
+      return (
+        <div>
+          <h1>My Pending Tasks</h1>
+          <p>You have no pending tasks</p>
+        </div>
+      );
+    }
+
+    const data = Object.keys(directReportsSubmittedForms).map((id) => {
+      return {
+        user: directReports[directReportsSubmittedForms[id].userId].username,
+        form: forms[directReportsSubmittedForms[id].formId].title,
+        timestamp: moment(directReportsSubmittedForms[id].timestamp).format(' - LLLL'),
+      };
+    });
+
+    return (
+      <div>
+        <h1>My Pending Tasks</h1>
+        <Griddle
+          data={data}
+          plugins={[plugins.LocalPlugin]}
+          components={{
+            Layout: NewLayout,
+          }}
+        >
+          <RowDefinition>
+            <ColumnDefinition
+              key='user'
+              id='user'
+              title='Direct Report'
+            />
+            <ColumnDefinition
+              key='form'
+              id='form'
+              title='Form'
+            />
+            <ColumnDefinition
+              key='timestamp'
+              id='timestamp'
+              title='Submitted On'
+            />
+          </RowDefinition>
+        </Griddle>
+      </div>
+    );
+  }
+
   render () {
     return (
       <div>
-        { this.prepareTable() }
+        { this.prepareMySubmissions() }
+        { this.prepareMyTasks() }
         <hr />
         <div>
           <p>As an employee, you will be able to:</p>
