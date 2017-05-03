@@ -24,7 +24,7 @@ const BasicExample = () => (
     <div>
       <Nav bsStyle='pills'>
         <img
-          src='/logo.png'
+          src='/img/logo.png'
           style={{
             width: '120px',
             padding: '5px 10px',

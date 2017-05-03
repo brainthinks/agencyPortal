@@ -6,29 +6,27 @@ const fs = require('fs');
 const del = require('del');
 const path = require('path');
 
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')({ lazy: true });
 const runSequence = require('run-sequence');
 
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackConfig = require('./webpack.config');
+
 const config = require('./gulpConfig');
 
-const webpackConfigDev = require('./webpack.config.dev');
-
 gulp.task('build-clean', () => {
-  return del(['build']);
+  return del(['./build']);
 });
 
-gulp.task('build-dirs', () => {
-  for (let i = 0; i < config.buildDirectories.length; i++) {
-    const dir = config.buildDirectories[i];
+gulp.task('build-prepare', () => {
+  fs.mkdirSync('./build');
+  return gulp.src(['./client/**/*']).pipe(gulp.dest('./build'));
+});
 
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-  }
+gulp.task('build-remove-src', () => {
+  return del(['./build/js/']);
 });
 
 gulp.task('sass-dev', () => {
@@ -37,7 +35,7 @@ gulp.task('sass-dev', () => {
     cascade : false,
   };
 
-  gulp.src(config.scss.main)
+  return gulp.src(config.scss.main)
     .pipe($.plumber())
     .pipe($.sassBulkImport().on('error', $.sass.logError))
     .pipe($.sass().on('error', $.sass.logError))
@@ -50,12 +48,30 @@ gulp.task('sass-dev-watch', () => {
   gulp.watch(config.watch.scss, ['sass-dev']);
 });
 
+gulp.task('webpack-dev-server', () => {
+  const compiler = webpack(webpackConfig);
+  const server = new WebpackDevServer(compiler, {
+    contentBase: "build/",
+    proxy: {
+      "/api/*": "http://localhost:3000",
+    },
+  });
+
+  compiler.plugin('done', function() {
+    server.listen(8080, "localhost", function() {
+      console.log('listening on 8080');
+    });
+  });
+})
+
 gulp.task('build-dev', (done) => {
   runSequence(
     'build-clean',
-    'build-dirs',
+    'build-prepare',
+    'build-remove-src',
     'sass-dev',
     'sass-dev-watch',
+    'webpack-dev-server',
     done
   );
 });
