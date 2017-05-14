@@ -33,12 +33,12 @@ module.exports = {
     reference: 'entry',
     default: [],
   },
-  approvalPaths: {
-    name: 'approvalPaths',
-    title: 'Approval Paths',
-    description: 'The approval paths required for this form to be approved.',
+  approvals: {
+    name: 'approvals',
+    title: 'Approvals',
+    description: 'A collection of relationshipId values that will determine the approvalRequest records that get created for all submittedForm records associated with this form.',
     type: 'collection',
-    reference: 'approvalPath',
+    reference: 'relationship',
     default: [],
   },
 };

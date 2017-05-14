@@ -17,18 +17,11 @@ module.exports = {
     reference: 'form',
     required: true,
   },
-  timestamp: {
-    name: 'timestamp',
-    title: 'Time of Submission',
-    description: 'The time the user submitted the form.',
+  submittedOn: {
+    name: 'submittedOn',
+    title: 'Date of Submission',
+    description: 'The date and time the user submitted the form.',
     type: 'timestamp',
     required: true,
-  },
-  approvedPaths: {
-    name: 'approvedPaths',
-    title: 'Approvals',
-    description: 'The approvals steps that have been approved.',
-    type: 'collection',
-    default: [],
   },
 };

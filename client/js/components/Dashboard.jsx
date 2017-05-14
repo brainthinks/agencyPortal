@@ -79,20 +79,22 @@ export default class Dashboard extends React.Component {
     }
 
     const data = submittedForms.map((submittedForm) => {
+      console.log(submittedForm);
+
       let status = 'Approved!';
 
-      if (!submittedForm.approvedPaths.length) {
-        status = [
-          'Pending Supervisor Approval',
-          'Pending Purchaser Approval',
-        ];
-      }
+      // if (!submittedForm.approvedPaths.length) {
+      //   status = [
+      //     'Pending Supervisor Approval',
+      //     'Pending Purchaser Approval',
+      //   ];
+      // }
 
-      if (submittedForm.approvedPaths.length === 1) {
-        status = [
-          'Pending Purchaser Approval',
-        ];
-      }
+      // if (submittedForm.approvedPaths.length === 1) {
+      //   status = [
+      //     'Pending Purchaser Approval',
+      //   ];
+      // }
 
       return {
         form: forms[submittedForm.formId].title,
@@ -129,9 +131,12 @@ export default class Dashboard extends React.Component {
               customComponent={({ value }) => {
                 return (
                   <ul>
-                    { value.map((aValue) => {
-                      return ( <li key={aValue}>{aValue}</li> );
-                    })}
+                    { Array.isArray(value)
+                        ? value.map((aValue) => {
+                          return ( <li key={aValue}>{aValue}</li> );
+                        })
+                        : value
+                    }
                   </ul>
                 );
               }}

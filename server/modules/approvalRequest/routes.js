@@ -4,26 +4,26 @@ module.exports = [
   {
     method: 'post',
     description: 'Create an approval path',
-    path: 'approvalPath',
+    path: 'approval',
   },
   {
     method: 'patch',
     description: 'Update an approval path',
-    path: 'approvalPath',
+    path: 'approval',
   },
   {
     method: 'put',
     description: 'Overwrite an approval path',
-    path: 'approvalPath',
+    path: 'approval',
   },
   {
     method: 'get',
     description: 'Get all approval paths in the system',
-    path: 'approvalPath',
+    path: 'approval',
   },
   {
     method: 'get',
     description: 'Get an approval path by ID',
-    path: 'approvalPath/:id',
+    path: 'approval/:id',
   },
 ];

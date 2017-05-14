@@ -62,7 +62,6 @@ class SubmittedFormServices {
       userId,
       formId,
       timestamp,
-      approvedPaths: [],
     };
 
     return collection(req).insertOne(record)

@@ -93,7 +93,15 @@ http://localhost:3000
 
 ## @todo
 
+* Admin Section landing page
+* Admin Section Relationship CRUDI
+* Admin Section Form CRUDI
+* Fix router to not show a 404 on page refresh!
 * Make restore-db run backup-db first, to ensure it is non-destructive
+* take advantage of multiple cpus by spawning workers
+* implement logging
+* implement error handling
+
 
 ## Resources
 
