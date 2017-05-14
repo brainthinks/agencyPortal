@@ -83,13 +83,13 @@ Examples:
 
 Run this command to start the server that serves the client-side files and proxies requests to the api server.  By default, the application will be available at this url:
 
-`http://localhost:8080`
+`[http://localhost:8080](http://localhost:8080)`
 
 ### `npm run build-dev`
 
 Run this command to start the server that serves the api.  By default, the base url for the api will be:
 
-`http://localhost:3000`
+`[http://localhost:3000](http://localhost:3000)`
 
 ## @todo
 
