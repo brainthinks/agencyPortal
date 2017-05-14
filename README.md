@@ -13,20 +13,20 @@
 #### For Development
 
 * `curl -L https://git.io/n-install | bash`
-** Install n (node version manager)
-** @see - https://github.com/tj/n
+    * Install n (node version manager)
+    * @see - https://github.com/tj/n
 * `n`
-** Choose the version of node you would like to run
-** For now, choose the latest version available to you
-** Also, read n's documentation to learn how to install more recent versions of node
+    * Choose the version of node you would like to run
+    * For now, choose the latest version available to you
+    * Also, read n's documentation to learn how to install more recent versions of node
 * `npm install -g mongodb-version-manager`
-** Install mongodb version manager
-** Ensure mongo is accessible in your $PATH
-*** @see https://github.com/mongodb-js/version-manager/issues/94
+    * Install mongodb version manager
+    * Ensure mongo is accessible in your $PATH
+        * @see https://github.com/mongodb-js/version-manager/issues/94
 * `m use 3.4`
-** Use MongoDB 3.4
+    * Use MongoDB 3.4
 * `npm i`
-** Install the project's node dependencies
+    * Install the project's node dependencies
 
 
 #### For Deployments
@@ -47,7 +47,7 @@
 Note that each of these commands should be run in a separate terminal
 
 * `sudo mongod`
-** If this doesn't work, ensure you followed the step above that adds mongo to your $PATH
+    * If this doesn't work, ensure you followed the step above that adds mongo to your $PATH
 * `npm run start-dev`
 * `npm run build-dev`
 
@@ -66,8 +66,8 @@ Arguments:
 
 Examples:
 * `npm run backup-db`
-** The directory `~/dumps/database/agencyPortal` will be created if it does not already exist
-** A `.tar.gz` file will be created in that directory with a filename of the timestamp at which the command was run
+    * The directory `~/dumps/database/agencyPortal` will be created if it does not already exist
+    * A `.tar.gz` file will be created in that directory with a filename of the timestamp at which the command was run
 
 ### `npm run restore-db`
 
@@ -77,7 +77,7 @@ Arguments:
 
 Examples:
 * `npm run restore-db ~/Downloads/2017_05_02_1493769858.tar.gz`
-** Will restore the database dump contained in `2017_05_02_1493769858.tar.gz` to the database `agencyPortal`
+    * Will restore the database dump contained in `2017_05_02_1493769858.tar.gz` to the database `agencyPortal`
 
 ### `npm run start-dev`
 
