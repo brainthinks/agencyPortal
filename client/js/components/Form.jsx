@@ -9,18 +9,8 @@ import Griddle, {
   ColumnDefinition,
 } from 'griddle-react';
 
-import FieldGroup from './FieldGroup.jsx';
-
-const NewLayout = ({ Table, Filter }) => (
-  <div>
-    <div style={{ paddingBottom: '10px' }}>
-      <Filter />
-    </div>
-    <div>
-      <Table />
-    </div>
-  </div>
-);
+import { Table } from '~/components/table/';
+import FieldGroup from '~/components/FieldGroup';
 
 export default class Form extends React.Component {
   constructor (props) {
@@ -76,7 +66,7 @@ export default class Form extends React.Component {
 
     axios.post('/api/submittedForm', record)
       .then(() => {
-        this.setState({ submitted: true });
+        // this.setState({ submitted: true });
       })
       .catch((err) => {
         console.error(err);
@@ -92,12 +82,12 @@ export default class Form extends React.Component {
           <FieldGroup
             key={id}
             id={id}
-            type="radio"
+            type='radio'
             label={entry.text}
             description={entry.description}
             options={entry.choices}
             onChange={this.onChange}
-            placeholder="Enter text"
+            placeholder='Enter text'
           />
         );
       }
@@ -106,11 +96,11 @@ export default class Form extends React.Component {
           <FieldGroup
             key={id}
             id={id}
-            type="text"
+            type='text'
             label={entry.text}
             description={entry.description}
             onChange={this.onChange}
-            placeholder="Enter text"
+            placeholder='Enter text'
           />
         );
       }
@@ -119,11 +109,11 @@ export default class Form extends React.Component {
           <FieldGroup
             key={id}
             id={id}
-            type="textarea"
+            type='textarea'
             label={entry.text}
             description={entry.description}
             onChange={this.onChange}
-            placeholder="Enter text"
+            placeholder='Enter text'
           />
         );
       }
@@ -132,11 +122,11 @@ export default class Form extends React.Component {
           <FieldGroup
             key={id}
             id={id}
-            type="text"
+            type='text'
             label={entry.text}
             description={entry.description}
             onChange={this.onChange}
-            placeholder="Enter a date"
+            placeholder='Enter a date'
           />
         );
       }
@@ -145,11 +135,11 @@ export default class Form extends React.Component {
           <FieldGroup
             key={id}
             id={id}
-            type="text"
+            type='text'
             label={entry.text}
             description={entry.description}
             onChange={this.onChange}
-            placeholder="Enter a number"
+            placeholder='Enter a number'
           />
         );
       }
@@ -167,9 +157,7 @@ export default class Form extends React.Component {
       <Griddle
         data={data}
         plugins={[plugins.LocalPlugin]}
-        components={{
-          Layout: NewLayout,
-        }}
+        components={{ Layout: Table }}
       >
         <RowDefinition>
           <ColumnDefinition

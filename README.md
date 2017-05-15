@@ -1,10 +1,13 @@
 # Agency Portal
 
+A prototype web application for demonstrating the transition to a digital form management system.
+
 ## Requirements
 
 * Latest Node 6 LTS
 * Latest MongoDB 3.4
 * NPM version 3.10 or later
+
 
 ## Installation
 
@@ -38,6 +41,7 @@
 * @todo - production deployment of node - perhaps nodesource?
 * `npm i`
 
+
 ## Use
 
 ### Ubuntu 16.04 64-bit
@@ -55,6 +59,7 @@ Note that each of these commands should be run in a separate terminal
 
 * `sudo service mongod start`
 * @todo
+
 
 ## Utilities
 
@@ -91,12 +96,15 @@ Run this command to start the server that serves the api.  By default, the base 
 
 http://localhost:3000
 
+
 ## @todo
 
-* Admin Section landing page
-* Admin Section Relationship CRUDI
+* set up eslint locally
+* add deletion confirmation modal in admin section
 * Admin Section Form CRUDI
-* Fix router to not show a 404 on page refresh!
+* add a favicon
+* fix console errors at first page load
+* update webpack to recognize .jsx files
 * Make restore-db run backup-db first, to ensure it is non-destructive
 * take advantage of multiple cpus by spawning workers
 * implement logging

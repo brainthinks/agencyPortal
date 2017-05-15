@@ -31,7 +31,9 @@ export default class Dashboard extends React.Component {
       showApproved: true,
       showRejected: true,
     };
+  }
 
+  componentDidMount () {
     this.initialize();
   }
 
