@@ -17,7 +17,7 @@ export default class RelationshipView extends React.Component {
   constructor (props) {
     super(props);
 
-    this.onChange         = this.onChange.bind(this);
+    this.onChange       = this.onChange.bind(this);
     this.onEdit         = this.onEdit.bind(this);
     this.onReturnToList = this.onReturnToList.bind(this);
     this.onDelete       = this.onDelete.bind(this);

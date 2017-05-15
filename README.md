@@ -99,12 +99,12 @@ http://localhost:3000
 
 ## @todo
 
+* implement approvals
 * set up eslint locally
 * add deletion confirmation modal in admin section
 * Admin Section Form CRUDI
 * add a favicon
 * fix console errors at first page load
-* update webpack to recognize .jsx files
 * Make restore-db run backup-db first, to ensure it is non-destructive
 * take advantage of multiple cpus by spawning workers
 * implement logging
